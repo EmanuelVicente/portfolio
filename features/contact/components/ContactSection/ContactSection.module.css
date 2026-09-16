@@ -1,0 +1,100 @@
+.section {
+  padding: 160px 0;
+  background: var(--surface-dark);
+  color: #fff;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.35fr) minmax(0, 1fr);
+  gap: 40px;
+}
+
+.eyebrow {
+  margin: 8px 0 0;
+  color: var(--muted-light);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: clamp(58px, 9vw, 120px);
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+}
+
+.body {
+  max-width: 600px;
+  min-width: 0;
+  padding-top: 12px;
+}
+
+.body > p {
+  max-width: 500px;
+  margin: 0;
+  color: var(--muted-light);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.email {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 100%;
+  margin-top: 48px;
+  padding-bottom: 8px;
+  color: #fff;
+  border-bottom: 1px solid #52525b;
+  font-size: clamp(18px, 2vw, 24px);
+  overflow-wrap: anywhere;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.email span {
+  transition: transform 180ms ease;
+}
+
+.email:hover {
+  border-color: #fff;
+}
+
+.email:hover span {
+  transform: translate(3px, -3px);
+}
+
+.email:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 6px;
+}
+
+@media (max-width: 800px) {
+  .section {
+    padding: 100px 0;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .header h2 {
+    font-size: clamp(52px, 15vw, 84px);
+  }
+
+  .body {
+    padding-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .email,
+  .email span {
+    transition: none;
+  }
+}

@@ -1,0 +1,102 @@
+.menu {
+  position: relative;
+  z-index: 60;
+  display: none;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 14px;
+  color: var(--foreground);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.button:hover {
+  background: var(--surface);
+  border-color: var(--muted-light);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.navigation {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 220px;
+  padding: 8px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgb(0 0 0 / 8%);
+  animation: menu-in 160ms ease-out;
+}
+
+.navigation ul {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navigation a {
+  display: block;
+  padding: 12px;
+  color: var(--foreground);
+  border-radius: 7px;
+  font-size: 14px;
+  transition: background-color 160ms ease;
+}
+
+.navigation a:hover {
+  background: var(--surface);
+}
+
+.navigation a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 800px) {
+  .menu {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .navigation,
+  .navigation a {
+    transition: none;
+  }
+
+  .navigation {
+    animation: none;
+  }
+}
