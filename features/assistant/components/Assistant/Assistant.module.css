@@ -136,8 +136,16 @@
   flex: 1;
   flex-direction: column;
   gap: 16px;
+  min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.messages::-webkit-scrollbar {
+  display: none;
 }
 
 .message {
@@ -289,6 +297,7 @@
   padding: 0 16px 12px;
   color: var(--muted-light);
   font-size: 10px;
+  line-height: 1.4;
   text-align: center;
 }
 

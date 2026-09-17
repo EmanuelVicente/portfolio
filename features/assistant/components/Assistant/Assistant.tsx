@@ -5,6 +5,7 @@ import { askAssistant, type AssistantMessage } from '../../assistant.api';
 import styles from './Assistant.module.css';
 
 const MAX_HISTORY_MESSAGES = 20;
+const STICK_TO_BOTTOM_THRESHOLD_PX = 80;
 
 interface Message {
   id: number;
@@ -32,15 +33,48 @@ export function Assistant({ isOpen, onClose, onToggle }: AssistantProps) {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
+  const shouldStickToBottomRef = useRef(true);
+
+  const scrollMessagesToBottom = () => {
+    const container = messagesRef.current;
+
+    if (!container) {
+      return;
+    }
+
+    container.scrollTop = container.scrollHeight;
+  };
+
+  const handleMessagesScroll = () => {
+    const container = messagesRef.current;
+
+    if (!container) {
+      return;
+    }
+
+    const distanceFromBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+    shouldStickToBottomRef.current = distanceFromBottom <= STICK_TO_BOTTOM_THRESHOLD_PX;
+  };
 
   useEffect(() => {
     if (isOpen) {
       inputRef.current?.focus();
+      shouldStickToBottomRef.current = true;
+      scrollMessagesToBottom();
       return;
     }
 
     triggerRef.current?.focus();
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen || !shouldStickToBottomRef.current) {
+      return;
+    }
+
+    scrollMessagesToBottom();
+  }, [isOpen, messages, isLoading]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -80,6 +114,7 @@ export function Assistant({ isOpen, onClose, onToggle }: AssistantProps) {
       content,
     }));
 
+    shouldStickToBottomRef.current = true;
     setMessages((currentMessages) => [...currentMessages, userMessage].slice(-MAX_HISTORY_MESSAGES));
 
     setInput('');
@@ -139,7 +174,13 @@ export function Assistant({ isOpen, onClose, onToggle }: AssistantProps) {
             </button>
           </div>
 
-          <div className={styles.messages} role="log" aria-live="polite" aria-label="AI assistant conversation">
+          <div
+            ref={messagesRef}
+            className={styles.messages}
+            role="log"
+            aria-live="polite"
+            aria-label="AI assistant conversation"
+            onScroll={handleMessagesScroll}>
             {messages.map((message) => (
               <div
                 key={message.id}
@@ -167,6 +208,7 @@ export function Assistant({ isOpen, onClose, onToggle }: AssistantProps) {
 
           <form className={styles.form} onSubmit={handleSubmit}>
             <input
+              ref={inputRef}
               type="text"
               className={styles.input}
               value={input}
@@ -183,7 +225,9 @@ export function Assistant({ isOpen, onClose, onToggle }: AssistantProps) {
             </button>
           </form>
 
-          <p className={styles.footer}>AI assistant · Based on Emanuel&apos;s portfolio</p>
+          <p className={styles.footer}>
+            AI assistant · Free Gemini tier · Replies may be limited or unavailable
+          </p>
         </aside>
       )}
     </>

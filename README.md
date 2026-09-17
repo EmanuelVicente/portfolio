@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Frontend
 
-## Getting Started
+Next.js frontend for [Emanuel Vicente](https://www.emanuelvicente.com.ar)’s personal portfolio.
 
-First, run the development server:
+Displays profile, experience, projects, and skills from the backend API, and includes a client-side AI assistant chat.
+
+> **Note:** The assistant uses Google Gemini’s free tier. Answers may be limited, delayed, or unavailable under free-plan rate limits and quotas.
+
+For the full project overview (frontend + backend), see the root [`README.md`](../README.md).
+
+## Stack
+
+- Next.js (App Router)
+- React
+- TypeScript
+
+## Getting started
 
 ```bash
+cp .env.example .env.local
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The backend API should be running (default [http://localhost:3001](http://localhost:3001)).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment variables
 
-## Learn More
+| Variable | Description |
+| --- | --- |
+| `API_URL` | Backend URL for server-side fetches (`/profile`) |
+| `NEXT_PUBLIC_API_URL` | Backend URL for browser requests (`/assistant`) |
+| `NEXT_PUBLIC_SITE_URL` | Canonical site URL used for SEO |
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run start` | Start production server |
+| `npm run lint` | Lint |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project layout
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+app/                 # Routes, layout, metadata, sitemap
+components/layout/   # Header, footer, shared layout
+features/
+  profile/           # Hero + profile fetching
+  experience/
+  projects/
+  skills/
+  contact/
+  assistant/         # AI chat UI
+```
